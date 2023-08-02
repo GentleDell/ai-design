@@ -13,6 +13,17 @@ module.exports = {
     '@typescript-eslint/no-shadow': 'error',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
+    'import/prefer-default-export': 'off',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+  },
+  globals: {
+    NodeJS: true,
+    React: true,
   },
   parserOptions: {
     ecmaVersion: 2020,
