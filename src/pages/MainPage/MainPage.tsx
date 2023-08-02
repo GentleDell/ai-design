@@ -1,5 +1,4 @@
 import { Button, Divider, Layout, theme } from 'antd';
-import Sider from 'antd/es/layout/Sider';
 import DropDownForm from 'components/DropDownForm/DropDownForm';
 import './index.less';
 import { useState } from 'react';
@@ -14,13 +13,13 @@ export default function MainPage() {
 
   return (
     <Layout hasSider className="mainPage">
-      <Sider theme="light" width={400} className="sider">
+      <Layout.Sider theme="light" width={400} className="sider">
         <DropDownForm
           setImages={setImages}
           setLoading={setLoading}
           setLoadingImages={setLoadingImages}
         />
-      </Sider>
+      </Layout.Sider>
       <Layout className="pageContent">
         <Layout.Header
           style={{
