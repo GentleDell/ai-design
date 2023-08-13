@@ -108,6 +108,7 @@ export default function MainPage() {
                   selected={selectedImages[index]}
                   index={index}
                   handleCheck={handleCheck}
+                  className="picture"
                 />
               ))}
           </div>
@@ -121,7 +122,7 @@ export default function MainPage() {
             预览
           </Button>
           <Button type="primary" onClick={handleRecycle}>
-            垃圾篓
+            删除
           </Button>
         </Layout.Footer>
       </Layout>
