@@ -33,24 +33,10 @@ export default function DropDownForm({
   setLoading,
   setLoadingImages,
 }: IDropDownFormProps) {
-  // const [category, setCategory] = useState('');
-  // const [style, setStyle] = useState('');
-  // const [clothesLength, setClothesLength] = useState('');
-  // const [fitType, setFitType] = useState('');
-  // const [versionType, setVersionType] = useState('');
-  // const [designElement, setDesignElement] = useState('');
-  // const [sleeveLength, setSleeveLength] = useState('');
-  // const [collarType, setCollarType] = useState('');
-  // const [sleeveType, setSleeveType] = useState('');
-  // const [shoulderType, setShoulderType] = useState('');
-  // const [pictureDetail, setPictureDetail] = useState('');
-  // const [pictureNumber, setPictureNumber] = useState(1);
-  // const [groupNumber, setGroupNumber] = useState(1);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const [result, setResult] = useState<any>(null);
   const dispatch = useDispatch();
   const settings = useSelector((state: RootState) => state.txt2img.settings);
-  const [form] = Form.useForm();
 
   const { query, result: result4 } = useProgress({
     url: 'http://127.0.0.1',
@@ -89,31 +75,35 @@ export default function DropDownForm({
     }
   }, [result4]);
 
-  const handle2imgClick = () => {
-    console.log(form.getFieldsValue());
+  const handleValuesChange = (changedValues: any, allValues: any) => {
+    console.log('changedValues', changedValues);
+    console.log('allValues', allValues);
     dispatch(
       setTxt2imgSettings({
         ...settings,
-        n_iter: form.getFieldValue('picture_number'),
-        batch_size: form.getFieldValue('group_number'),
+        n_iter: allValues.picture_number,
+        batch_size: allValues.group_number,
         steps,
         width,
         height,
         prompt: generatePrompt({
-          garment_category: form.getFieldValue('garment_category'),
-          style: form.getFieldValue('style'),
-          clothes_length: form.getFieldValue('clothes_length'),
-          fit_type: form.getFieldValue('fit_type'),
-          version_type: form.getFieldValue('version_type'),
-          design_element: form.getFieldValue('design_element'),
-          sleeve_length: form.getFieldValue('sleeve_length'),
-          collar_type: form.getFieldValue('collar_type'),
-          sleeve_type: form.getFieldValue('sleeve_type'),
-          shoulder_type: form.getFieldValue('shoulder_type'),
-          picture_detail: form.getFieldValue('picture_detail'),
+          garment_category: allValues.garment_category,
+          style: allValues.style,
+          clothes_length: allValues.clothes_length,
+          fit_type: allValues.fit_type,
+          version_type: allValues.version_type,
+          design_element: allValues.design_element,
+          sleeve_length: allValues.sleeve_length,
+          collar_type: allValues.collar_type,
+          sleeve_type: allValues.sleeve_type,
+          shoulder_type: allValues.shoulder_type,
+          picture_detail: allValues.picture_detail,
         }),
       })
     );
+  };
+
+  const handle2imgClick = () => {
     txt2img();
     const id = setInterval(() => {
       query();
@@ -127,8 +117,8 @@ export default function DropDownForm({
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       className="mainPageForm"
+      onValuesChange={handleValuesChange}
       onFinish={handle2imgClick}
-      form={form}
       initialValues={{
         picture_number: 1,
         group_number: 1,
@@ -234,21 +224,11 @@ export default function DropDownForm({
         <Select options={imageDetailOptions} />
       </Form.Item>
 
-      <Form.Item
-        label="图数"
-        name="picture_number"
-        className="item"
-        rules={[{ required: true, message: 'Please input picture number!' }]}
-      >
+      <Form.Item label="图数" name="picture_number" className="item">
         <Slider min={1} max={10} />
       </Form.Item>
 
-      <Form.Item
-        label="组数"
-        name="group_number"
-        className="item"
-        rules={[{ required: true, message: 'Please input group number!' }]}
-      >
+      <Form.Item label="组数" name="group_number" className="item">
         <Slider min={1} max={10} />
       </Form.Item>
 
